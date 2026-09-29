@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XP — Turn free time into experience</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="grid-backdrop" aria-hidden="true"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <a href="#" class="brand-mark" style="text-decoration: none; color: var(--primary-deep);" title="Go to homepage">XP</a>
+      <span class="brand-tag">experience · expense · enterprise</span>
+    </div>
+    <nav class="nav-links">
+      <a href="#quests">Quest Board</a>
+      <a href="#add-quest-section">Add Custom Quest</a>
+      <a href="#profile">Your Profile</a>
+    </nav>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+      <span class="theme-icon" aria-hidden="true">🌙</span>
+    </button>
+    <a class="nav-cta" href="#quests">Start a Quest</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">A side-quest board for busy people</p>
+      <h1>Your free time<br>has <span class="hl">XP</span> in it.</h1>
+      <p class="hero-sub">
+        XP turns spare hours into paid gigs, free tasks just for fun (like chores or local markets), and premium seminars &mdash; sorted so you can pick exactly what fits your budget and schedule.
+      </p>
+      <div class="hero-actions">
+        <a href="#quests" class="btn btn-primary">Browse the quest board</a>
+        <a href="#add-quest-section" class="btn btn-ghost">Create custom task</a>
+      </div>
+      <div class="hero-stats">
+        <div><strong id="stat-quest-count">0</strong><span>live quests</span></div>
+        <div><strong id="stat-total-xp">0</strong><span>total XP on the board</span></div>
+        <div><strong>3</strong><span>quest tiers</span></div>
+      </div>
+    </div>
+
+    <!-- Character card: editable player profile -->
+    <div class="stat-card" id="profile" aria-label="Your player profile">
+      <div class="stat-card-top">
+        <button class="avatar" id="avatar-btn" aria-label="Change avatar" title="Change avatar">🎒</button>
+        <div class="stat-name-wrap">
+          <p class="stat-name" id="display-name">Ajax</p>
+          <p class="stat-class" id="display-class">Class: Second-year Student</p>
+        </div>
+        <span class="stat-level">LV 7</span>
+      </div>
+
+      <div class="xp-track" role="progressbar" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100">
+        <div class="xp-fill" id="xp-fill" style="width: 64%;"></div>
+      </div>
+      <p class="xp-label"><span id="xp-count">640</span> / 1000 XP to next level</p>
+
+      <ul class="stat-list">
+        <li><span>Active side quests</span><strong>2</strong></li>
+        <li><span>Free time / week</span><strong>~6 hrs</strong></li>
+        <li><span>Wallet Balance</span><strong style="color: var(--mint);">₱4,130</strong></li>
+        <li><span>Currency</span><strong>PHP (₱)</strong></li>
+      </ul>
+
+      <button class="btn btn-ghost btn-small" id="edit-profile-btn">Edit profile</button>
+
+      <!-- Hidden editor, revealed on click -->
+      <form id="profile-form" class="profile-form" hidden>
+        <label>
+          Name
+          <input type="text" id="input-name" maxlength="24" placeholder="Your name">
+        </label>
+        <label>
+          Class / role
+          <input type="text" id="input-class" maxlength="30" placeholder="e.g. Second-year Student">
+        </label>
+        <fieldset class="avatar-picker">
+          <legend>Avatar</legend>
+          <div class="avatar-options" id="avatar-options">
+            <button type="button" data-avatar="🎒">🎒</button>
+            <button type="button" data-avatar="🧑‍🎓">🧑‍🎓</button>
+            <button type="button" data-avatar="🦊">🦊</button>
+            <button type="button" data-avatar="🐼">🐼</button>
+            <button type="button" data-avatar="🌟">🌟</button>
+            <button type="button" data-avatar="🚀">🚀</button>
+            <button type="button" data-avatar="🎮">🎮</button>
+            <button type="button" data-avatar="📚">📚</button>
+          </div>
+        </fieldset>
+        <div class="profile-form-actions">
+          <button type="submit" class="btn btn-primary btn-small">Save</button>
+          <button type="button" class="btn btn-ghost btn-small" id="cancel-profile-btn">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ HOW XP WORKS ============ -->
+  <section class="section" id="how">
+    <p class="eyebrow eyebrow-dark center">How XP works</p>
+    <h2 class="center">Three quest tiers. One board.</h2>
+    <p class="center section-sub">
+      Every opportunity on XP is sorted into a tier so you always know what you're signing up for before you tap in.
+    </p>
+    <div class="tier-cards">
+      <div class="tier-card tier-sky">
+        <span class="tier-icon">💰</span>
+        <h3>Paid Quests</h3>
+        <p>Gigs where you get paid if you complete them—campus jobs, freelance work, and paid seminars.</p>
+      </div>
+      <div class="tier-card tier-mint">
+        <span class="tier-icon">📘</span>
+        <h3>Free Quests</h3>
+        <p>Free tasks just for fun like home chores, weekend markets, or local neighborhood events.</p>
+      </div>
+      <div class="tier-card tier-coral">
+        <span class="tier-icon">🏅</span>
+        <h3>Premium Quests</h3>
+        <p>Paid technical workshops, bootcamps, and certification events requiring registration entry.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ QUEST BOARD ============ -->
+  <section class="section" id="quests">
+    <p class="eyebrow eyebrow-dark center">Quest Board</p>
+    <h2 class="center">Find a quest that fits you</h2>
+    <p class="center section-sub">
+      Filtered instantly right in your browser. Narrow your hunt down to paid tasks, free events, or location targets.
+    </p>
+
+    <div class="filter-bar">
+      <div class="filter-group" role="tablist" aria-label="Quest tier">
+        <button class="chip is-active" data-filter="tier" data-value="all">All</button>
+        <button class="chip" data-filter="tier" data-value="paid">Paid</button>
+        <button class="chip" data-filter="tier" data-value="free">Free Tasks</button>
+        <button class="chip" data-filter="tier" data-value="premium">Premium</button>
+      </div>
+
+      <div class="filter-group">
+        <label for="location-select">Where</label>
+        <select id="location-select">
+          <option value="all">Anywhere</option>
+          <option value="on-campus">On campus</option>
+          <option value="local">Local / nearby</option>
+          <option value="remote">Remote</option>
+        </select>
+      </div>
+
+      <div class="filter-group filter-slider">
+        <label for="hours-range">Time I have: <span id="hours-value">Any</span></label>
+        <input type="range" id="hours-range" min="0" max="16" step="1" value="16">
+      </div>
+    </div>
+
+    <!-- Main board Undo / Restore control requested by Nethan -->
+    <div style="text-align: center; margin-bottom: 20px;">
+      <button class="btn btn-ghost btn-small" id="open-restore-modal-btn">📁 View/Restore Deleted Quests (<span id="deleted-count">0</span>)</button>
+    </div>
+
+    <p class="results-count"><span id="results-count">0</span> quests match</p>
+
+    <div class="quest-grid" id="quest-grid" aria-live="polite"></div>
+  </section>
+
+  <!-- ============ DYNAMIC CREATION HUB ============ -->
+  <section class="section" id="add-quest-section" style="max-width: 650px; margin: 0 auto;">
+    <div class="stat-card">
+      <h3 style="margin-bottom: 8px; text-align: center;">🛡️ Post a New Quest / Task</h3>
+      <p style="text-align: center; font-size: 0.88rem; margin: 0 0 20px; color: var(--ink-soft);">
+        Add custom items instantly to the filtering engine below.
+      </p>
+      <form id="dynamic-quest-form" class="profile-form" style="display: grid;">
+        <label>
+          Quest Title
+          <input type="text" id="q-title" required placeholder="e.g. Help at Weekend Market Stalls">
+        </label>
+        <label>
+          Organizer / Group
+          <input type="text" id="q-org" required placeholder="e.g. Local Barangay Council">
+        </label>
+        <label>
+          Description
+          <input type="text" id="q-desc" required placeholder="Describe chores, fun parameters or paid status...">
+        </label>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <label>
+            Quest Tier
+            <select id="q-tier">
+              <option value="paid">Paid (You get money)</option>
+              <option value="free">Free (Just for fun / chores)</option>
+              <option value="premium">Premium (Paid events / seminars)</option>
+            </select>
+          </label>
+          <label>
+            Location
+            <select id="q-location">
+              <option value="local">Local / Nearby</option>
+              <option value="on-campus">On Campus</option>
+              <option value="remote">Remote</option>
+            </select>
+          </label>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <label id="financial-label">
+            Financial Amount (₱)
+            <input type="number" id="q-money" min="0" value="0" placeholder="Earnings payout or Entry cost">
+          </label>
+          <label>
+            Duration (Hours)
+            <input type="number" id="q-hours" min="1" max="16" value="2">
+          </label>
+        </div>
+        <label style="margin-top: 6px;">
+          Awarded XP
+          <input type="number" id="q-xp" min="10" max="1000" value="100">
+        </label>
+        <div style="margin-top: 10px; text-align: center;">
+          <button type="submit" class="btn btn-primary" style="width: 100%;">Deploy Quest to Board</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ MODALS (Detailed View & Confirmations) ============ -->
+<div id="quest-modal" class="modal-backdrop" hidden>
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3 id="modal-title">Quest Title</h3>
+      <button class="modal-close" id="close-quest-modal">✕</button>
+    </div>
+    <p id="modal-org" class="quest-org" style="margin-bottom: 12px;"></p>
+    <p id="modal-desc" style="font-size: 0.95rem; margin-bottom: 20px; color: var(--ink-soft);"></p>
+    <div id="modal-meta" class="quest-meta" style="margin-bottom: 20px;"></div>
+    <div style="display: flex; gap: 10px; justify-content: flex-end;">
+      <button class="btn btn-primary btn-small" id="accept-quest-btn">Accept Quest & Start</button>
+      <button class="btn btn-ghost btn-small" id="close-quest-modal-btn">Close</button>
+    </div>
+  </div>
+</div>
+
+<div id="delete-modal" class="modal-backdrop" hidden>
+  <div class="modal-card" style="max-width: 400px; text-align: center;">
+    <h3>⚠️ Confirm Deletion</h3>
+    <p style="margin: 14px 0 24px; color: var(--ink-soft); font-size: 0.92rem;">Are you sure you want to remove this quest from the board? You can restore it anytime from the recovery drawer.</p>
+    <div style="display: flex; gap: 10px; justify-content: center;">
+      <button class="btn btn-primary btn-small" id="confirm-delete-btn" style="background: var(--coral); color: white;">Yes, Delete</button>
+      <button class="btn btn-ghost btn-small" id="cancel-delete-btn">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div id="restore-modal" class="modal-backdrop" hidden>
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3>📁 Deleted Quests Recovery</h3>
+      <button class="modal-close" id="close-restore-modal">✕</button>
+    </div>
+    <p style="font-size: 0.88rem; color: var(--ink-soft); margin-bottom: 16px;">Select any previously deleted quest to restore it back to the main active board.</p>
+    <div id="restore-list" style="display: grid; gap: 10px; max-height: 300px; overflow-y: auto;"></div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="brand-mark small">XP</span>
+    <p>Built for managing local schedules, chores, and events.</p>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
